@@ -6,6 +6,7 @@ import Calculator from './study/components/State/Calculator/Calculator'
 import CountState from './study/components/State/CountState/CountState'
 import InputState1 from './study/components/State/InputState1/InputState1'
 import InputState2 from './study/components/State/InputState2/InputState2'
+import InputState4 from './study/components/State/InputState4/InputState4'
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
     {/* <CountState /> */}
     {/* <Calculator /> */}
     {/* <InputState1 /> */}
-    <InputState2 />
+    <InputState4 />
   </div>
 }
 
