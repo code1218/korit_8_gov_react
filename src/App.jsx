@@ -1,7 +1,10 @@
 import './App.css'
+import Effect1 from './study/components/Effect/Effect1/Effect1'
+import Effect2 from './study/components/Effect/Effect2/Effect2'
 import HelloJsx from './study/components/HelloJsx/HelloJsx'
 import HelloProps from './study/components/HelloProps/HelloProps'
 import HelloReact from './study/components/HelloReact/HelloReact'
+import DomRef from './study/components/Ref/DomRef/DomRef'
 import Calculator from './study/components/State/Calculator/Calculator'
 import CountState from './study/components/State/CountState/CountState'
 import InputState1 from './study/components/State/InputState1/InputState1'
@@ -17,7 +20,10 @@ function App() {
     {/* <CountState /> */}
     {/* <Calculator /> */}
     {/* <InputState1 /> */}
-    <InputState4 />
+    {/* <InputState4 /> */}
+    {/* <DomRef /> */}
+    {/* <Effect1 /> */}
+    <Effect2 />
   </div>
 }
 
