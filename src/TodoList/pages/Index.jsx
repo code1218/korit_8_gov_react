@@ -5,6 +5,7 @@ import IndexMain from '../components/IndexMain/IndexMain';
 function Index(props) {
     const [ todoList, setTodoList ] = useState([]);
     const [ filter, setFilter ] = useState("incomplete");
+    const [ searchText, setSearchText ] = useState("");
 
     useEffect(() => {
         console.log(todoList);
@@ -18,10 +19,15 @@ function Index(props) {
         } else if (filter === "incomplete") {
             return !todo.isComplete;
         }
+    }).filter(todo => {
+        if (searchText.trim().length === 0) {
+            return true;
+        }
+        return todo.content.includes(searchText);
     });
 
     return (
-        <IndexLayout filter={filter} setFilter={setFilter}>
+        <IndexLayout filter={filter} setFilter={setFilter} setSearchText={setSearchText} >
             <IndexMain todoList={filterTodoList} setTodoList={setTodoList} />
         </IndexLayout>
     );
