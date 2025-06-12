@@ -48,7 +48,7 @@ function IndexMain({todoList, setTodoList}) {
     }
 
     const handleContentOpenOnClick = (todoId) => {
-        setContentOpenId(prev => prev !== todoId ? todoId : 0);
+        setContentOpenId(prev => prev === todoId ? 0 : todoId);
     }
 
     return (
@@ -64,7 +64,6 @@ function IndexMain({todoList, setTodoList}) {
                             </li>
                         ))
                     }
-                    
                 </ul>
             </div>
             <div css={s.todoInputContainer}>
