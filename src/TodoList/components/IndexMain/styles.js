@@ -23,6 +23,7 @@ export const listContainer = css`
             display: flex;
             box-sizing: border-box;
             border-bottom: 1px solid #dbdbdb;
+            padding: 5px 10px;
             
             & > input[type=checkbox] {
                 display: none;
@@ -49,6 +50,25 @@ export const listContainer = css`
                 }
             }
         }
+    }
+`;
+
+export const todoTextContainer = (isOpen) => css`
+    margin-left: 10px;
+    width: 280px;
+    text-align: start;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    ${
+        isOpen ?
+        `white-space: break-spaces;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        text-overflow: ellipsis;`
+        :
+        `white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;`
     }
 `;
 
