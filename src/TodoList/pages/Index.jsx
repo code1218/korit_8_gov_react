@@ -3,13 +3,33 @@ import IndexLayout from '../components/IndexLayout/IndexLayout';
 import IndexMain from '../components/IndexMain/IndexMain';
 
 function Index(props) {
+    const [ isLoad, setLoad ] = useState(false);
     const [ todoList, setTodoList ] = useState([]);
     const [ filter, setFilter ] = useState("incomplete");
     const [ searchText, setSearchText ] = useState("");
 
     useEffect(() => {
-        console.log(todoList);
-    }, [todoList]);
+        let localStorageTodoList = localStorage.getItem("todoList");
+        if (!localStorageTodoList) {
+            localStorage.setItem("todoList", JSON.stringify([]));
+            localStorageTodoList = [];
+            setTodoList(localStorageTodoList);
+        } else {
+            setTodoList(JSON.parse(localStorageTodoList));
+        }
+        setLoad(true);
+    }, []);
+
+    useEffect(() => {
+        setSearchText("");
+        if (isLoad) {
+            let localStorageTodoList = localStorage.getItem("todoList");
+            const todoListJson = JSON.stringify(todoList);
+            if (localStorageTodoList !== todoListJson) {
+                localStorage.setItem("todoList", todoListJson);
+            }
+        }
+    }, [isLoad, todoList]);
 
     const filterTodoList = todoList.filter(todo => {
         if (filter === "all") {

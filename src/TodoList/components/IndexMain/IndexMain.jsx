@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { IoTrash } from 'react-icons/io5';
 import * as s from './styles';
 import React, { use, useEffect, useState } from 'react';
 
@@ -51,6 +52,10 @@ function IndexMain({todoList, setTodoList}) {
         setContentOpenId(prev => prev === todoId ? 0 : todoId);
     }
 
+    const handleDeleteOnClick = (todoId) => {
+        setTodoList(prev => prev.filter(todo => todo.id !== todoId));
+    }
+
     return (
         <div css={s.container}>
             <div css={s.listContainer}>
@@ -61,6 +66,11 @@ function IndexMain({todoList, setTodoList}) {
                                 <input type="checkbox" id={`todo${todo.id}`} value={todo.id} checked={todo.isComplete} onChange={handleCheckBoxOnChange} />
                                 <label htmlFor={`todo${todo.id}`}></label>
                                 <div css={s.todoTextContainer(contentOpenId === todo.id)} onClick={() => handleContentOpenOnClick(todo.id)}>{todo.content}</div>
+                                <div css={s.hiddenTrashBox}>
+                                    <div css={s.trashBox} onClick={() => handleDeleteOnClick(todo.id)}>
+                                        <IoTrash />
+                                    </div>
+                                </div>
                             </li>
                         ))
                     }
