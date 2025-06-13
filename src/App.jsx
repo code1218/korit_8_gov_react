@@ -15,6 +15,8 @@ import InputState1 from './study/components/State/InputState1/InputState1'
 import InputState2 from './study/components/State/InputState2/InputState2'
 import InputState4 from './study/components/State/InputState4/InputState4'
 import Index from './TodoList/pages/Index'
+import Router2 from './RouterStudy/Router2/Router2'
+import Router3 from './RouterStudy/Router3/Router3'
 
 function App() {
 
@@ -32,7 +34,9 @@ function App() {
     {/* <Emotion />
     <Emotion2 /> */}
     {/* <Index /> */}
-    <Router1 />
+    {/* <Router1 /> */}
+    {/* <Router2 /> */}
+    <Router3 />
   </BrowserRouter>
 }
 
