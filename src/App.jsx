@@ -1,4 +1,6 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
+import Router1 from './RouterStudy/Router1/Router1'
 import Effect1 from './study/components/Effect/Effect1/Effect1'
 import Effect2 from './study/components/Effect/Effect2/Effect2'
 import Emotion from './study/components/Emotion/Emotion'
@@ -16,7 +18,7 @@ import Index from './TodoList/pages/Index'
 
 function App() {
 
-  return <div>
+  return <BrowserRouter>
     {/* <HelloReact /> */}
     {/* <HelloJsx /> */}
     {/* <HelloProps /> */}
@@ -29,8 +31,9 @@ function App() {
     {/* <Effect2 /> */}
     {/* <Emotion />
     <Emotion2 /> */}
-    <Index />
-  </div>
+    {/* <Index /> */}
+    <Router1 />
+  </BrowserRouter>
 }
 
 export default App
