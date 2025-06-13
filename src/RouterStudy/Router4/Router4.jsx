@@ -15,13 +15,21 @@ function Component2() {
 
     useEffect(() => {
         const entries = searchParams.entries();
+        let searchParamObj = {};
         while (true) {
             const next = entries.next();
             if(next.done) {
                 break;
             } 
-            console.log(next.value);
+            const [ key, value ] = next.value;
+            
+            searchParamObj = {
+                ...searchParamObj,
+                [key]: value,
+            }
         }
+        console.log(searchParamObj);
+        console.log(searchParams.getAll("address"));
     }, [searchParams]);
     
     const handleOnClick = () => {

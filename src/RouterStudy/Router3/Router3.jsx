@@ -32,6 +32,10 @@ function Router3(props) {
         console.log(location.state)
     }, [location.state]);
 
+    const handleBackOnClick = () => {
+        navigate(-1);
+    }
+
     return (
         <div>
             <Link to={"/location/1"} >location1</Link>
@@ -39,6 +43,7 @@ function Router3(props) {
             <Link to={"/location/3"} >location3-1</Link>
             <Link to={"/location/3?name=김준일"} >location3-2</Link>
             <Link to={"/location/3?name=김준이"} >location3-3</Link>
+            <button onClick={handleBackOnClick}>뒤로가기</button>
             <Routes>
                 <Route path='/location/1' element={<h1>Location1</h1>} />
                 <Route path='/location/2' element={<h1>Location2</h1>} />
