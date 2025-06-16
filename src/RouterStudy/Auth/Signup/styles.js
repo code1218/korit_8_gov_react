@@ -7,12 +7,13 @@ export const layout = css`
     align-items: center;
     flex-grow: 1;
     box-sizing: border-box;
-    padding-bottom: 100px;
+    padding-bottom: 60px;
 `;
 
 export const title = css`
     margin: 10px 0 40px;
     font-size: 30px;
+    cursor: default;
 `;
 
 export const container = css`
@@ -30,13 +31,13 @@ export const inputItem = css`
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
-    border: 1px solid #dbdbdb;
     width: 100%;
 `;
 
 export const inputContainer = () => css`
     display: flex;
     align-items: center;
+    border: 1px solid #dbdbdb;
     width: 100%;
     height: 35px;
     background-color: #fff;
@@ -46,12 +47,20 @@ export const inputContainer = () => css`
         border: none;
         outline: none;
         flex-grow: 1;
+        height: 100%;
         padding: 0 10px;
     }
 `;
 
 export const messageContainer = () => css`
-
+    display: flex;
+    justify-content: start;
+    box-sizing: border-box;
+    padding: 0 5px;
+    width: 100%;
+    font-size: 12px;
+    color: #f10400;
+    cursor: default;
 `;
 
 export const submitButton = css`
