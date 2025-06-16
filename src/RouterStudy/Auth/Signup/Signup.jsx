@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { CiCircleCheck } from 'react-icons/ci';
 import * as s from './styles';
-import React, { useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { MdOutlineCheckCircle, MdOutlineErrorOutline } from 'react-icons/md';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 
@@ -45,6 +45,7 @@ function Signup(props) {
     });
 
     const [ showPassword, setShowPassword ] = useState(false);
+    const [ submitDisabled, setSubmitDisabled ] = useState(true);
 
     const handleOnChange = (e) => {
         setInputState(prev => ({
@@ -57,8 +58,19 @@ function Signup(props) {
     }
 
     const handleOnBlur = (e) => {
+        if (!/^.+$/.test(inputState[e.target.name].value)) {
+            setInputState(prev => ({
+                ...prev,
+                [e.target.name]: {
+                    ...prev[e.target.name],
+                    status: "idle",
+                }
+            }));
+            return;
+        }
+
         if (e.target.name === "checkPassword") {
-            if (e.target.value.trim().length > 0 && inputState.password.status === "success") {
+            if (inputState.password.status === "success") {
                 setInputState(prev => ({
                     ...prev,
                     checkPassword: {
@@ -78,6 +90,10 @@ function Signup(props) {
             }
         }));
     }
+
+    useEffect(() => {
+        setSubmitDisabled(!!Object.values(inputState).map(obj => obj.status).find(status => status !== "success"));
+    }, [inputState]);
 
     return (
         <div css={s.layout}>
@@ -122,7 +138,7 @@ function Signup(props) {
                 </div>
                 <div css={s.inputItem}>
                     <div css={s.inputContainer(inputState.checkPassword.status)}>
-                        <input type="text" name='checkPassword' placeholder='비밀번호 확인' value={inputState.checkPassword.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                        <input type={showPassword ? "text" : "password"} name='checkPassword' placeholder='비밀번호 확인' value={inputState.checkPassword.value} onChange={handleOnChange} onBlur={handleOnBlur} />
                         <div>
                             {
                                 inputState.checkPassword.status !== "idle"
@@ -178,7 +194,7 @@ function Signup(props) {
                     }
                 </div>
             </div>
-            <button css={s.submitButton}>가입하기</button>
+            <button css={s.submitButton} disabled={submitDisabled}>가입하기</button>
         </div>
     );
 }

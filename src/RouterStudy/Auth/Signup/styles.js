@@ -51,6 +51,13 @@ export const inputContainer = (status) => css`
         padding: 0 10px;
     }
 
+    & > p {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
     & > div {
         display: flex;
         justify-content: center;
@@ -58,7 +65,7 @@ export const inputContainer = (status) => css`
         width: 35px;
         height: 100%;
 
-        &:nth-last-of-type(1) * {
+        & * {
             font-size: 20px;
             color: ${status === "success" ? "#38ba00" : "#f10400"};
         }
@@ -71,6 +78,7 @@ export const messageContainer = () => css`
     box-sizing: border-box;
     padding: 0 5px;
     width: 100%;
+    text-align: left;
     font-size: 12px;
     color: #f10400;
     cursor: default;
@@ -85,4 +93,12 @@ export const submitButton = css`
     background-color: #00b3ff;
     color: #fff;
     font-weight: 600;
+
+    &:disabled {
+        background-color: #d5d5d5;
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        cursor: default;
+    }
 `;
