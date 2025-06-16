@@ -1,0 +1,66 @@
+import { css } from "@emotion/react";
+
+export const layout = css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding-bottom: 100px;
+`;
+
+export const title = css`
+    margin: 10px 0 40px;
+    font-size: 30px;
+`;
+
+export const container = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    padding: 20px;
+    width: 350px;
+`;
+
+export const inputItem = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    width: 100%;
+`;
+
+export const inputContainer = () => css`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    background-color: #fff;
+
+    & > input {
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        flex-grow: 1;
+        padding: 0 10px;
+    }
+`;
+
+export const messageContainer = () => css`
+
+`;
+
+export const submitButton = css`
+    box-sizing: border-box;
+    margin-top: 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 0;
+    width: 350px;
+    background-color: #00b3ff;
+    color: #fff;
+    font-weight: 600;
+`;

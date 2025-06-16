@@ -6,6 +6,7 @@ import { Link, Route, Routes } from 'react-router-dom';
  */
 
 function Page1() {
+    console.log("page1")
     return <>
         <div>
             <h1>Page1</h1>
@@ -18,6 +19,7 @@ function Page1() {
 }
 
 function Page2() {
+    console.log("page2")
     return <>
         <div>
             <h1>Page2</h1>
