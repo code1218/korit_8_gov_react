@@ -34,7 +34,7 @@ export const inputItem = css`
     width: 100%;
 `;
 
-export const inputContainer = () => css`
+export const inputContainer = (status) => css`
     display: flex;
     align-items: center;
     border: 1px solid #dbdbdb;
@@ -49,6 +49,19 @@ export const inputContainer = () => css`
         flex-grow: 1;
         height: 100%;
         padding: 0 10px;
+    }
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 100%;
+
+        &:nth-last-of-type(1) * {
+            font-size: 20px;
+            color: ${status === "success" ? "#38ba00" : "#f10400"};
+        }
     }
 `;
 

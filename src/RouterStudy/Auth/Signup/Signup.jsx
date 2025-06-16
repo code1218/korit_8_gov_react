@@ -1,8 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { CiCircleCheck } from 'react-icons/ci';
 import * as s from './styles';
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { MdOutlineCheckCircle, MdOutlineErrorOutline } from 'react-icons/md';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
+
+
+/**
+ *  유효성검사(Validation Check)
+ */
 
 function Signup(props) {
 
@@ -38,6 +44,8 @@ function Signup(props) {
         }
     });
 
+    const [ showPassword, setShowPassword ] = useState(false);
+
     const handleOnChange = (e) => {
         setInputState(prev => ({
             ...prev,
@@ -49,6 +57,19 @@ function Signup(props) {
     }
 
     const handleOnBlur = (e) => {
+        if (e.target.name === "checkPassword") {
+            if (e.target.value.trim().length > 0 && inputState.password.status === "success") {
+                setInputState(prev => ({
+                    ...prev,
+                    checkPassword: {
+                        ...prev["checkPassword"],
+                        status: prev["checkPassword"].value === prev["password"].value ? "success" : "error",
+                    }
+                }));
+            }
+            return;
+        }
+
         setInputState(prev => ({
             ...prev,
             [e.target.name]: {
@@ -63,8 +84,8 @@ function Signup(props) {
             <div css={s.container}>
                 <h1 css={s.title}>회원가입</h1>
                 <div css={s.inputItem}>
-                    <div css={s.inputContainer()}>
-                        <input type="text" name='username' value={inputState.username.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                    <div css={s.inputContainer(inputState.username.status)}>
+                        <input type="text" name='username' placeholder='사용자이름' value={inputState.username.value} onChange={handleOnChange} onBlur={handleOnBlur} />
                         <div>
                             {
                                 inputState.username.status !== "idle"
@@ -79,6 +100,81 @@ function Signup(props) {
                     {
                         inputState.username.status === "error" &&
                         <div css={s.messageContainer()}>{inputState.username.message}</div>
+                    }
+                </div>
+                <div css={s.inputItem}>
+                    <div css={s.inputContainer(inputState.password.status)}>
+                        <input type={showPassword ? "text" : "password"} name='password' placeholder='비밀번호' value={inputState.password.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                        <p onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <IoEyeOff /> : <IoEye />}</p>
+                        {
+                            inputState.password.status !== "idle"
+                            && (
+                                inputState.password.status === "success" 
+                                ? <div><MdOutlineCheckCircle /></div>
+                                : <div><MdOutlineErrorOutline /></div>
+                            )
+                        }
+                    </div>
+                    {
+                        inputState.password.status === "error" &&
+                        <div css={s.messageContainer()}>{inputState.password.message}</div>
+                    }
+                </div>
+                <div css={s.inputItem}>
+                    <div css={s.inputContainer(inputState.checkPassword.status)}>
+                        <input type="text" name='checkPassword' placeholder='비밀번호 확인' value={inputState.checkPassword.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                        <div>
+                            {
+                                inputState.checkPassword.status !== "idle"
+                                && (
+                                    inputState.checkPassword.status === "success" 
+                                    ? <MdOutlineCheckCircle />
+                                    : <MdOutlineErrorOutline />
+                                )
+                            }
+                        </div>
+                    </div>
+                    {
+                        inputState.checkPassword.status === "error" &&
+                        <div css={s.messageContainer()}>{inputState.checkPassword.message}</div>
+                    }
+                </div>
+                <div css={s.inputItem}>
+                    <div css={s.inputContainer(inputState.fullName.status)}>
+                        <input type="text" name='fullName' placeholder='성명' value={inputState.fullName.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                        <div>
+                            {
+                                inputState.fullName.status !== "idle"
+                                && (
+                                    inputState.fullName.status === "success" 
+                                    ? <MdOutlineCheckCircle />
+                                    : <MdOutlineErrorOutline />
+                                )
+                            }
+                        </div>
+                    </div>
+                    {
+                        inputState.fullName.status === "error" &&
+                        <div css={s.messageContainer()}>{inputState.fullName.message}</div>
+                    }
+                </div>
+                <div css={s.inputItem}>
+                    <div css={s.inputContainer(inputState.email.status)}>
+                        <input type="text" name='email' placeholder='이메일' value={inputState.email.value} onChange={handleOnChange} onBlur={handleOnBlur} />
+                        <div>
+                            {
+                                inputState.email.status !== "idle"
+                                && (
+                                    inputState.email.status === "success" 
+                                    ? <MdOutlineCheckCircle />
+                                    : <MdOutlineErrorOutline />
+                                )
+                            }
+                        </div>
+                    </div>
+                    {
+                        inputState.email.status === "error" &&
+                        <div css={s.messageContainer()}>{inputState.email.message}</div>
                     }
                 </div>
             </div>
