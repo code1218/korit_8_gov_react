@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { MdOutlineCheckCircle, MdOutlineErrorOutline } from 'react-icons/md';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 /**
@@ -42,8 +43,9 @@ function useSignInAndUpInput({ id, type, name, placeholder, value, valid }) {
     }
 
     return {
-        inputValue,
-        status,
+        name: name,
+        value: inputValue,
+        status: status,
         element: <SignInAndUpInput 
             key={id}
             type={type} 
@@ -110,6 +112,7 @@ function InputValidatedMessage({status, message}) {
 }
 
 function Signup(props) {
+    const navigate = useNavigate();
     const [ submitDisabled, setSubmitDisabled ] = useState(true);
     const inputs = [
         {
@@ -132,8 +135,8 @@ function Signup(props) {
             value: "",
             valid: {
                 enabled: true,
-                regex: /^(?=.*[a-z])(?=.*\d).{4,20}$/,
-                message: "아이디는 영문, 숫자를 포함 4~20자여야 합니다.",
+                regex: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,20}$/,
+                message: "비밀번호는 8~20자이며, 영문·숫자·특수문자를 모두 포함해야 합니다.",
             },
         },
         {
@@ -184,15 +187,31 @@ function Signup(props) {
 
     const handleRegisterOnClick = async () => {
         const url = "http://localhost:8080/api/users";
-        
-        const data = {
-            username: "test",
-            password: "1234",
-            fullName: "김준일",
-            email: "test@gmail.com",
-        };
 
-        axios.post(url, data);
+        let data = {};
+
+        inputItems.forEach(inputItem => {
+            data = {
+                ...data,
+                [inputItem.name]: inputItem.value,
+            }
+        });
+
+        try {
+            const response = await axios.post(url, data);
+            alert("사용자 등록 완료");
+
+            navigate("/users/signin", {
+                state: {
+                    username: response.data.username, 
+                    password: response.data.password,
+                }
+            });
+
+        } catch(error) {
+            alert("사용자 등록 오류");
+        }
+        
     }
 
     return (
