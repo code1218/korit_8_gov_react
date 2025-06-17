@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { CiCircleCheck } from 'react-icons/ci';
 import * as s from './styles';
-import React, { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineCheckCircle, MdOutlineErrorOutline } from 'react-icons/md';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
+import axios from 'axios';
 
 
 /**
@@ -20,7 +20,6 @@ function useSignInAndUpInput({ id, type, name, placeholder, value, valid }) {
     const [ status, setStatus ] = useState(STATUS.idle);
 
     const handleOnChange = (e) => {
-        console.log(e.target.value)
         setInputValue(e.target.value);
     }
 
@@ -177,10 +176,24 @@ function Signup(props) {
     ];
 
     const inputItems = inputs.map(input => useSignInAndUpInput(input));
+    // [input, input] -> [useSignInAndUpInput(리턴값), useSignInAndUpInput(리턴값)]
 
     useEffect(() => {
         setSubmitDisabled(!!inputItems.find(inputItem => inputItem.status !== "success"))
     }, [inputItems]);
+
+    const handleRegisterOnClick = async () => {
+        const url = "http://localhost:8080/api/users";
+        
+        const data = {
+            username: "test",
+            password: "1234",
+            fullName: "김준일",
+            email: "test@gmail.com",
+        };
+
+        axios.post(url, data);
+    }
 
     return (
         <div css={s.layout}>
@@ -190,7 +203,7 @@ function Signup(props) {
                     inputItems.map(inputItem => inputItem.element)
                 }
             </div>
-            <button css={s.submitButton} disabled={submitDisabled}>가입하기</button>
+            <button css={s.submitButton} disabled={submitDisabled} onClick={handleRegisterOnClick}>가입하기</button>
         </div>
     );
 }
