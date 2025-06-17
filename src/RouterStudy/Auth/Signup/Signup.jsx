@@ -42,6 +42,7 @@ function useSignInAndUpInput({ type, name, placeholder, value, valid }) {
 
     return {
         inputValue,
+        status,
         element: <SignInAndUpInput 
             type={type} 
             name={name} 
@@ -114,8 +115,9 @@ function InputValidatedMessage({status, message}) {
 
 function Signup(props) {
     const [ submitDisabled, setSubmitDisabled ] = useState(true);
-    const [ inputs, setInputs ] = useState([
+    const inputs = [
         {
+            id: 1,
             type: "text",
             name: "username",
             placeholder: "사용자이름",
@@ -127,6 +129,7 @@ function Signup(props) {
             },
         },
         {
+            id: 2,
             type: "password",
             name: "password",
             placeholder: "비밀번호",
@@ -138,6 +141,7 @@ function Signup(props) {
             },
         },
         {
+            id: 3,
             type: "password",
             name: "checkPassword",
             placeholder: "비밀번호 확인",
@@ -148,7 +152,31 @@ function Signup(props) {
                 message: "비밀번호가 서로 일치하지 않습니다.",
             },
         },
-    ]);
+        {
+            id: 4,
+            type: "text",
+            name: "fullName",
+            placeholder: "성명",
+            value: "",
+            valid: {
+                enabled: true,
+                regex: /^[가-힣]{2,20}$/,
+                message: "이름은 한글 2~20자여야 합니다.",
+            },
+        },
+        {
+            id: 5,
+            type: "email",
+            name: "email",
+            placeholder: "이메일",
+            value: "",
+            valid: {
+                enabled: true,
+                regex: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                message: "유효하지 않은 이메일 형식입니다.",
+            },
+        },
+    ];
 
     const inputItems = inputs.map(input => useSignInAndUpInput(input));
 
