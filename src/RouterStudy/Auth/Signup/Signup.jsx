@@ -10,7 +10,7 @@ import { IoEye, IoEyeOff } from 'react-icons/io5';
  *  유효성검사(Validation Check)
  */
 
-function useSignInAndUpInput({ type, name, placeholder, value, valid }) {
+function useSignInAndUpInput({ id, type, name, placeholder, value, valid }) {
     const STATUS = {
         idle: "idle",
         success: "success",
@@ -34,6 +34,8 @@ function useSignInAndUpInput({ type, name, placeholder, value, valid }) {
             setStatus(valid.regex.test(e.target.value) ? STATUS.success : STATUS.error);
             return;
         }
+
+        setStatus(valid.callback() ? STATUS.success : STATUS.error);
     }
 
     const isEmpty = (str) => {
@@ -44,6 +46,7 @@ function useSignInAndUpInput({ type, name, placeholder, value, valid }) {
         inputValue,
         status,
         element: <SignInAndUpInput 
+            key={id}
             type={type} 
             name={name} 
             placeholder={placeholder} 
@@ -56,11 +59,15 @@ function useSignInAndUpInput({ type, name, placeholder, value, valid }) {
 }
 
 function SignInAndUpInput({type, name, placeholder, value, onChange, onBlur, status, message}) {
+    const { isShow, element: PasswordInputHiddenButton } = usePasswordInputHiddenButton();
 
     return (
         <div css={s.inputItem}>
             <div css={s.inputContainer(status)}>
-                <input type={type} name={name} placeholder={placeholder} value={value} onChange={onChange} onBlur={onBlur} />
+                <input type={type === "password" ? isShow ? "text" : "password" : type} name={name} placeholder={placeholder} value={value} onChange={onChange} onBlur={onBlur} />
+                {
+                    type === "password" && PasswordInputHiddenButton
+                }
                 {
                     status !== "idle"
                     && (
@@ -75,32 +82,22 @@ function SignInAndUpInput({type, name, placeholder, value, onChange, onBlur, sta
     )
 }
 
-function PasswordInputHiddenButton() {
+function usePasswordInputHiddenButton() {
     const [isShow, setShow] = useState(false);
 
     const handleOnClick = () => {
         setShow(prev => !prev);
     }
 
-    return <p onClick={handleOnClick}>{isShow ? <IoEyeOff /> : <IoEye />}</p>
+    return {
+        isShow,
+        element: <PasswordInputHiddenButton isShow={isShow} onClick={handleOnClick} />
+    }
 }
 
-function useInputValidatedMessage({defaultMessage}) {
-    const STATUS = {
-        idle: "idle",
-        success: "success",
-        error: "error",
-    };
-    const [ status, setStatus ] = useState(STATUS.idle);
-    const [ message, setMessage ] = useState(defaultMessage || "");
 
-    return {
-        status,
-        setStatus,
-        message,
-        setMessage,
-        element: <InputValidatedMessage status={status} message={message} />
-    }
+function PasswordInputHiddenButton({isShow, onClick}) {
+    return <p onClick={onClick}>{isShow ? <IoEyeOff /> : <IoEye />}</p>
 }
 
 function InputValidatedMessage({status, message}) {
@@ -149,6 +146,7 @@ function Signup(props) {
             valid: {
                 enabled: false,
                 regex: null,
+                callback: () => inputItems[1].inputValue === inputItems[2].inputValue,
                 message: "비밀번호가 서로 일치하지 않습니다.",
             },
         },
@@ -180,9 +178,9 @@ function Signup(props) {
 
     const inputItems = inputs.map(input => useSignInAndUpInput(input));
 
-    // useEffect(() => {
-    //     setSubmitDisabled(!!Object.values(inputState).map(obj => obj.status).find(status => status !== "success"));
-    // }, [inputState]);
+    useEffect(() => {
+        setSubmitDisabled(!!inputItems.find(inputItem => inputItem.status !== "success"))
+    }, [inputItems]);
 
     return (
         <div css={s.layout}>
