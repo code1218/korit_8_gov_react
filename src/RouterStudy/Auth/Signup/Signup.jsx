@@ -204,7 +204,7 @@ function Signup(props) {
             navigate("/users/signin", {
                 state: {
                     username: response.data.username, 
-                    password: response.data.password,
+                    password: inputItems.find(inputItem => inputItem.name === "password").value,
                 }
             });
 
