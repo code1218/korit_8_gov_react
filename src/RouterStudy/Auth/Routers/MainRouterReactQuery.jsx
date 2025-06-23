@@ -7,7 +7,6 @@ import AuthRouter from './AuthRouter';
 import NotFound from '../NotFound/NotFound';
 import RootHeader from '../RootHeader/RootHeader';
 import axios from 'axios';
-import { useGlobalStateStore, useRefreshStore } from '../stores/storeStudy';
 import { useQuery } from '@tanstack/react-query';
 
 /**
